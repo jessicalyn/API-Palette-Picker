@@ -12,3 +12,14 @@ app.get('/', (request, response) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+app.get('/api/v1/palettes', (request, response) => {
+  database('palettes').select()
+    .then(palettes => {
+      response.status(200).json(palettes)
+    })
+    .catch(error => {
+      response.status(500).json({
+        error
+      })
+    })
+})
