@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/jessicalyn/API-Palette-Picker/issues"
   },
-  "homepage": "https://github.com/jessicalyn/API-Palette-Picker#readme"
+  "homepage": "https://github.com/jessicalyn/API-Palette-Picker#readme",
+  "dependencies": {
+    "knex": "^0.16.5",
+    "pg": "^7.10.0"
+  }
 }
