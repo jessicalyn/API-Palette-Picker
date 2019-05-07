@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jessicalyn/API-Palette-Picker#readme",
   "dependencies": {
+    "express": "^4.16.4",
     "knex": "^0.16.5",
     "pg": "^7.10.0"
   }
