@@ -23,3 +23,19 @@ app.get('/api/v1/palettes', (request, response) => {
       })
     })
 })
+
+app.get('/api/v1/palettes/:id', (request, response) => {
+  database('palettes').where('palette_id', request.params.id).select()
+    .then(palette => {
+      if (palette) {
+        response.status(200).json(palette)
+      } else {
+        response.status(404).json(`Palette with id ${request.params.id} was not found`)
+      }
+    })
+    .catch(error => {
+      response.status(500).json({
+        error
+      })
+    })
+})
