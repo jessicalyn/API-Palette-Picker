@@ -41,7 +41,7 @@ describe('/api/v1', () => {
       expect(result.palette_name).toEqual(expectedPalette.palette_name)
     })
 
-    it('should response with status code 404 and error message if id does not exist', async () => {
+    it('should return status code 404 and error message if id does not exist', async () => {
       const expectedPalette = await database('palettes').first()
       const id = expectedPalette.palette_id - 1 
 
@@ -49,6 +49,49 @@ describe('/api/v1', () => {
       
       expect(response.status).toBe(404)
       expect(response.body).toBe(`Palette with id ${id} was not found`)
+    })
+  });
+
+  describe('POST /palettes', () => {
+    it.skip('should add a new palette in the database', async () => {
+      const project = await database('projects').first()
+      const projectId = project.project_id
+
+      const newPalette = {
+        palette_name: "Archie's Colors", 
+        project_id: projectId, 
+        color_1: "brown",
+        color_2: "white",
+        color_3: "dark brown", 
+        color_4: "red",
+        color_5: "black"
+      }
+
+      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+      const palettes = await database('palettes').where('palette_id', response.body[0]).select()
+      const palette = palettes[0]
+
+      expect(response.status).toBe(201)
+      expect(palette.palette_name).toBe(newPalette.palette_name)
+    })
+
+    it('should return status code 422 and error message if missing parameter', async () => {
+      const project = await database('projects').first()
+      const projectId = project.project_id
+
+      const newPalette = {
+        palette_name: "Archie's Colors",
+        color_1: "brown",
+        color_2: "white",
+        color_3: "dark brown", 
+        color_4: "red",
+        color_5: "black"
+      }
+
+      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+
+      expect(response.status).toBe(422)
+      expect(response.body).toStrictEqual({ error: 'Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "project_id"'})
     })
   })
 
