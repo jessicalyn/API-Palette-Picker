@@ -8,6 +8,11 @@ const configuration = require('./knexfile.js')[environment]
 const database = require('knex')(configuration)
 
 describe('/api/v1', () => {
+  let server
+
+  beforeAll(async () => {
+    server = request(app)
+  })
 
   beforeEach(async () => {
     await database.seed.run()
@@ -21,7 +26,7 @@ describe('/api/v1', () => {
         expectedPalettesLength += project.palettes.length
       })
 
-      const response = await request(app).get('/api/v1/palettes')
+      const response = await server.get('/api/v1/palettes')
       const results = response.body
 
       expect(response.status).toBe(200)
@@ -34,7 +39,7 @@ describe('/api/v1', () => {
       const expectedPalette = await database('palettes').first()
       const id = expectedPalette.palette_id
       
-      const response = await request(app).get(`/api/v1/palettes/${id}`)
+      const response = await server.get(`/api/v1/palettes/${id}`)
       const result = response.body[0]
 
       expect(response.status).toBe(200)
@@ -45,7 +50,7 @@ describe('/api/v1', () => {
       const expectedPalette = await database('palettes').first()
       const id = expectedPalette.palette_id - 1 
 
-      const response = await request(app).get(`/api/v1/palettes/${id}`)
+      const response = await server.get(`/api/v1/palettes/${id}`)
       
       expect(response.status).toBe(404)
       expect(response.body).toBe(`Palette with id ${id} was not found`)
@@ -53,7 +58,7 @@ describe('/api/v1', () => {
   });
 
   describe('POST /palettes', () => {
-    it.skip('should add a new palette in the database', async () => {
+    it('should add a new palette in the database', async () => {
       const project = await database('projects').first()
       const projectId = project.project_id
 
@@ -67,7 +72,7 @@ describe('/api/v1', () => {
         color_5: "black"
       }
 
-      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+      const response = await server.post('/api/v1/palettes').send(newPalette)
       const palettes = await database('palettes').where('palette_id', response.body[0]).select()
       const palette = palettes[0]
 
@@ -88,7 +93,7 @@ describe('/api/v1', () => {
         color_5: "black"
       }
 
-      const response = await request(app).post('/api/v1/palettes').send(newPalette)
+      const response = await server.post('/api/v1/palettes').send(newPalette)
 
       expect(response.status).toBe(422)
       expect(response.body).toStrictEqual({ error: 'Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "project_id"'})
@@ -102,7 +107,7 @@ describe('/api/v1', () => {
     it('should return all projects from the database',  async () => {
       const expectedProjectsLength = colorsData.length
 
-      const response = await request(app).get('/api/v1/projects')
+      const response = await server.get('/api/v1/projects')
       const results = response.body
 
       expect(response.status).toBe(200)
