@@ -13,7 +13,7 @@ describe('/api/v1', () => {
     await database.seed.run()
   });
 
-  // Palette Endpoints Tests
+// Palette Endpoints Tests
   describe('GET /palettes', () => {
     it('should return all palettes from the database', async () => {
       let expectedPalettesLength = 0
@@ -29,6 +29,32 @@ describe('/api/v1', () => {
     })
   });
 
+  describe('GET /palettes/:id', () => {
+    it('should return a palette from the database by id', async () => {
+      const expectedPalette = await database('palettes').first()
+      const id = expectedPalette.palette_id
+      
+      const response = await request(app).get(`/api/v1/palettes/${id}`)
+      const result = response.body[0]
+
+      expect(response.status).toBe(200)
+      expect(result.palette_name).toEqual(expectedPalette.palette_name)
+    })
+
+    it('should response with status code 404 and error message if id does not exist', async () => {
+      const expectedPalette = await database('palettes').first()
+      const id = expectedPalette.palette_id - 1 
+
+      const response = await request(app).get(`/api/v1/palettes/${id}`)
+      
+      expect(response.status).toBe(404)
+      expect(response.body).toBe(`Palette with id ${id} was not found`)
+    })
+  })
+
+
+
+// Project Endpoints Tests
   describe('GET /projects', () => {
     it('should return all projects from the database',  async () => {
       const expectedProjectsLength = colorsData.length

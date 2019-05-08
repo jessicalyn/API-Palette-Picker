@@ -1,4 +1,3 @@
-
 const express = require('express')
 const environment = process.env.NODE_ENV || 'development'
 const configuration = require('./knexfile')[environment]
@@ -27,7 +26,7 @@ app.get('/api/v1/palettes/:id', (request, response) => {
   const reqId = request.params.id
   database('palettes').where('palette_id', reqId).select()
     .then(palette => {
-      if (palette) {
+      if (palette.length) {
         response.status(200).json(palette)
       } else {
         response.status(404).json(`Palette with id ${reqId} was not found`)
