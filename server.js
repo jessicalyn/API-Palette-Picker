@@ -60,6 +60,7 @@ app.post('/api/v1/palettes', (request, response) => {
       })
     }
   }
+});
   
 //Project Endpoints
 app.get('/api/v1/projects', (request, response) => {
@@ -106,3 +107,20 @@ app.post('/api/v1/projects', (request, response) => {
       response.status(500).json({ error })
     })
 });
+
+app.delete('/api/v1/projects/:id', (request, response) => {
+  database('palettes').where('project_id', request.params.id).select().del()
+    .then(() => database('projects').where('project_id', request.params.id).select().del())
+    .then(project => {
+      if (project) {
+        response.sendStatus(204)
+      } else {
+        response.status(404).json({
+          error: `We could not find a project with an id of ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+})
