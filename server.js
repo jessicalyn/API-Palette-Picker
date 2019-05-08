@@ -60,6 +60,7 @@ app.post('/api/v1/palettes', (request, response) => {
       })
     }
   }
+});
   
 //Project Endpoints
 app.get('/api/v1/projects', (request, response) => {
@@ -105,4 +106,45 @@ app.post('/api/v1/projects', (request, response) => {
       console.log(error)
       response.status(500).json({ error })
     })
+});
+
+app.delete('/api/v1/projects/:id', (request, response) => {
+  database('palettes').where('project_id', request.params.id).select().del()
+    .then(() => database('projects').where('project_id', request.params.id).select().del())
+    .then(project => {
+      if (project) {
+        response.sendStatus(204)
+      } else {
+        response.status(404).json({
+          error: `We could not find a project with an id of ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+});
+
+app.put('/api/v1/projects/:id', (request, response) => {
+  const update = request.body;
+  if(!update.project_name){
+    response.status(422).send({
+      error: `Missing required parameter. Expected format: { project_name: <String> }`
+    })
+  } else {
+    database('projects').where('project_id', request.params.id).select().update('project_name', update.project_name)
+      .then(project => {
+        if (project) {
+          response.status(200).json({
+            message: 'Project name successfully updated.'})
+        } else {
+          response.status(404).json({
+            error: `Could not find a project with id ${request.params.id}.`
+          })
+        }
+      })
+      .catch(error => {
+        response.status(500).json({ error })
+      })
+  }
 });
