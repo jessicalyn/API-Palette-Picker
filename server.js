@@ -12,6 +12,7 @@ app.get('/', (request, response) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+// Palette Endpoints
 app.get('/api/v1/palettes', (request, response) => {
   database('palettes').select()
     .then(palettes => {
@@ -25,12 +26,13 @@ app.get('/api/v1/palettes', (request, response) => {
 });
 
 app.get('/api/v1/palettes/:id', (request, response) => {
-  database('palettes').where('palette_id', request.params.id).select()
+  const reqId = request.params.id
+  database('palettes').where('palette_id', reqId).select()
     .then(palette => {
       if (palette) {
         response.status(200).json(palette)
       } else {
-        response.status(404).json(`Palette with id ${request.params.id} was not found`)
+        response.status(404).json(`Palette with id ${reqId} was not found`)
       }
     })
     .catch(error => {
@@ -58,4 +60,4 @@ app.post('/api/v1/palettes', (request, response) => {
       })
     }
   }
-})
+});
