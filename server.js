@@ -123,4 +123,28 @@ app.delete('/api/v1/projects/:id', (request, response) => {
     .catch(error => {
       response.status(500).json({ error })
     })
-})
+});
+
+app.put('/api/v1/projects/:id', (request, response) => {
+  const update = request.body;
+  if(!update.project_name){
+    response.status(422).send({
+      error: `Missing required parameter. Expected format: { project_name: <String> }`
+    })
+  } else {
+    database('projects').where('project_id', request.params.id).select().update('project_name', update.project_name)
+      .then(project => {
+        if (project) {
+          response.status(200).json({
+            message: 'Project name successfully updated.'})
+        } else {
+          response.status(404).json({
+            error: `Could not find a project with id ${request.params.id}.`
+          })
+        }
+      })
+      .catch(error => {
+        response.status(500).json({ error })
+      })
+  }
+});
