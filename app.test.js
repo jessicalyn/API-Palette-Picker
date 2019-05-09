@@ -120,7 +120,7 @@ describe('/api/v1', () => {
   })
 
   describe('DELETE /palettes/:id', () => {
-    it.only('should delete a palette in the database by id', async () => {
+    it('should delete a palette in the database by id', async () => {
       const existingPalette = await database('palettes').first()
       const id = existingPalette.palette_id
       
@@ -131,15 +131,15 @@ describe('/api/v1', () => {
     })
 
     it('should return a status of 422 if the palette_id cannot be found', async () => {
-      //grab existing palette
-      //make an non-existant id
+      const existingPalette = await database('palettes').first()
+      const id = existingPalette.palette_id - 1
 
-      //execute
+      const response = await request(app).delete(`/api/v1/palettes/${id}`)
 
-      //expect status to be 422
-      //expect the correct message
+      expect(response.status).toBe(422)
+      expect(response.body.error).toBe(`Could not find palette with id ${id}`)
     })
-  })
+  });
 
 
 // Project Endpoints Tests
