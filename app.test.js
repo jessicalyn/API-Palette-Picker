@@ -210,5 +210,16 @@ describe('/api/v1', () => {
       expect(response.status).toBe(422)
       expect(response.body.error).toBe('Missing required parameter. Expected format: { project_name: <String> }.')
     })
+  });
+
+  describe('DELETE /projects:id', () => {
+    it('should delete a specific project by id', async () => {
+      const existingProject = await database('projects').first()
+      const id = existingProject.project_id
+
+      const response = await request(app).delete(`/api/v1/projects/${id}`)
+
+      expect(response.status).toBe(204)
+    })
   })
 })
