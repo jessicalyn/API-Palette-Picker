@@ -221,5 +221,15 @@ describe('/api/v1', () => {
 
       expect(response.status).toBe(204)
     })
-  })
+
+    it('should return a status code 404 when no project with matching id', async () => {
+      const existingProject = await database('projects').first()
+      const id = existingProject.project_id - 1
+
+      const response = await request(app).delete(`/api/v1/projects/${id}`)
+
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBe(`We could not find a project with an id of ${id}`)
+    })
+  });
 })
