@@ -61,7 +61,6 @@ app.post('/api/v1/palettes', (request, response) => {
 
 app.put('/api/palettes/:id', (request, response) => {
   const updatedPalette = request.body
-  // okay no required params? or should we require name, just doesn't NEED to be updated?
   database('palettes')
     .where('palette_id', request.params.id)
     .update({ 
