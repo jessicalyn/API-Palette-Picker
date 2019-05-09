@@ -104,6 +104,7 @@ describe('/api/v1', () => {
       const response = await request(app).put(`/api/v1/palettes/${existingPalette.palette_id}`).send(updatedPalette)
       const palette = await database('palettes').where('palette_id', existingPalette.palette_id)
 
+      expect(response.status).toBe(200)
       expect(palette[0].palette_name).toEqual(updatedPalette.palette_name)
     })
 
@@ -212,7 +213,7 @@ describe('/api/v1', () => {
     })
   });
 
-  describe('DELETE /projects:id', () => {
+  describe('DELETE /projects/:id', () => {
     it('should delete a specific project by id', async () => {
       const existingProject = await database('projects').first()
       const id = existingProject.project_id
@@ -232,4 +233,17 @@ describe('/api/v1', () => {
       expect(response.body.error).toBe(`We could not find a project with an id of ${id}`)
     })
   });
+
+  describe('PUT /projects/:id', () => {
+    it.skip('should update an existing project by id', async () => {
+
+      const existingProject = await database('projects').first()
+      const id = existingProject.project_id
+      const updatedProject = { project_name: "Cleopatra's Colors" }
+
+      const response = await request(app).put(`/api/v1/projects/${id}`).send(updatedProject)
+      expect(response.status).toBe(200)
+      //expect project name to match
+    })
+  })
 })

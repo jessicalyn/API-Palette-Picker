@@ -173,11 +173,11 @@ app.put('/api/v1/projects/:id', (request, response) => {
     })
   } else {
     database('projects').where('project_id', request.params.id).select()
-      .update({ project_name: 'update.project_name', updated_at: "does this work" }, [project_name, updated_at])
+      .update({ project_name: update.project_name }, ['project_name'])
       .then(project => {
-        if (project) {
+        if (project.length) {
           response.status(200).json({
-            message: `Project name successfully updated to ${project_name} at ${updated_at}.`})
+            message: `Project name successfully updated to ${project_name}.`})
         } else {
           response.status(404).json({
             error: `Could not find a project with id ${request.params.id}.`
