@@ -154,6 +154,29 @@ describe('/api/v1', () => {
       expect(results.length).toBe(expectedProjectsLength)
     })
   });
+
+  describe('GET /projects/:id', () => {
+    it.only('should return a specific project by id', async () => {
+      const expectedProject = await database('projects').first()
+      const id = expectedProject.project_id
+
+      const response = await request(app).get(`/api/v1/projects/${id}`)
+      const result = response.body[0]
+
+      expect(response.status).toBe(200)
+      expect(result.project_name).toBe(expectedProject.project_name)
+    })
+
+    it('should return status code 404 and error message if id does not exist', async () => {
+      const expectedProject = await database('projects').first()
+      const id = expectedProject.project_id - 1
+
+      const response = await request(app).get(`/api/v1/projects/${id}`)
+
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBe(`Could not find project with id ${id}`)
+    })
+  });
   
   describe('PUT /projects/:id', () => {
     it('should update a project name in the database by id', async () => {
