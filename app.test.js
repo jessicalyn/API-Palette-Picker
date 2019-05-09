@@ -191,7 +191,7 @@ describe('/api/v1', () => {
   })
 
   describe('POST /projects', () => {
-    it.only('should add a new project to the database', async () => {
+    it('should add a new project to the database', async () => {
       const newProject = { project_name: 'Paint the Vault' }
       
       const response = await request(app).post('/api/v1/projects').send(newProject)
@@ -203,7 +203,12 @@ describe('/api/v1', () => {
     })
 
     it('should response with status code 422 if required parameter is missing', async() => {
-
+      const newProject = { project_name: '' }
+      
+      const response = await request(app).post('/api/v1/projects').send(newProject)
+      
+      expect(response.status).toBe(422)
+      expect(response.body.error).toBe('Missing required parameter. Expected format: { project_name: <String> }.')
     })
   })
 })

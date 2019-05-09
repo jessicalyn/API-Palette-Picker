@@ -133,7 +133,7 @@ app.post('/api/v1/projects', (request, response) => {
 
   for (let requiredParameter of ['project_name']) {
     if (!project[requiredParameter]) {
-      return response.status(422).send({
+      return response.status(422).json({
         error: `Missing required parameter. Expected format: { project_name: <String> }.`
       })
     }
