@@ -156,7 +156,7 @@ describe('/api/v1', () => {
   });
 
   describe('GET /projects/:id', () => {
-    it.only('should return a specific project by id', async () => {
+    it('should return a specific project by id', async () => {
       const expectedProject = await database('projects').first()
       const id = expectedProject.project_id
 
@@ -187,6 +187,23 @@ describe('/api/v1', () => {
       const project = await database('projects').where('project_id', existingProject.project_id)
 
       expect(project[0].project_name).toBe(existingProject.project_name)
+    })
+  })
+
+  describe('POST /projects', () => {
+    it.only('should add a new project to the database', async () => {
+      const newProject = { project_name: 'Paint the Vault' }
+      
+      const response = await request(app).post('/api/v1/projects').send(newProject)
+      const projects = await database('projects').where('project_id', response.body.project_id).select()
+      const project = projects[0]
+
+      expect(response.status).toBe(201)
+      expect(project.project_name).toBe(newProject.project_name)
+    })
+
+    it('should response with status code 422 if required parameter is missing', async() => {
+
     })
   })
 })
