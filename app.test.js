@@ -100,6 +100,18 @@ describe('/api/v1', () => {
     })
   })
 
+  describe('PUT /palettes/:id', () => {
+    it('should update a current palette with any new values by id', async () => {
+      const existingPalette = await database('palettes').first()
+      console.log('existing palette', existingPalette)
+      const updatedPalette = { palette_name: "Yoshi's Colors" }
+
+      const response = await server.put(`/api/v1/palettes/${existingPalette.palette_id}`).send(updatedPalette)
+      const palette = await database('palettes').where('palette_id', existingPalette.palette_id)
+
+      expect(palette[0].palette_name).toEqual(updatedPalette.palette_name)
+    })
+  })
 
 
 // Project Endpoints Tests
@@ -115,4 +127,15 @@ describe('/api/v1', () => {
     })
   });
   
+  describe('PUT /projects/:id', () => {
+    it('should update a project name in the database by id', async () => {
+      const existingProject = await database('projects').first()
+      const updatedName = { project_name: "Classroom Colors" }
+
+      const response = await server.put(`/api/v1/projects/${existingProject.project_id}`).send(updatedName)
+      const project = await database('projects').where('project_id', existingProject.project_id)
+
+      expect(project[0].project_name).toBe(existingProject.project_name)
+    })
+  })
 })
