@@ -44,20 +44,17 @@ app.post('/api/v1/palettes', (request, response) => {
 
   for(let requiredParameters of ['palette_name', 'project_id', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
     if (newPalette[requiredParameters] === undefined) {
-      response.status(422).json({ error: `Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "${requiredParameters}"`})
-    } else {
-      database('palettes').insert(newPalette, 'palette_id')
-        .then(palette => {
-          response.status(201).json(palette)
-        })
-        .catch(error => {
-          response.status(500).json({
-            error
-        })
-      })
+      return response.status(422).json({ error: `Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "${requiredParameters}"`})
     }
   }
-});
+      database('palettes').insert(newPalette, 'palette_id')
+        .then(palette => {
+          return response.status(201).json(palette)
+        })
+        .catch(error => {
+          return response.status(500).json({ error })
+    })
+  });
 
 app.put('/api/v1/palettes/:id', (request, response) => {
   const existingPalette = database('palettes').where('palette_id', request.params.id).select()
