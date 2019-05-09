@@ -107,7 +107,7 @@ describe('/api/v1', () => {
       expect(palette[0].palette_name).toEqual(updatedPalette.palette_name)
     })
 
-    it.only('should return a status code 404 if palette id not in database', async () => {
+    it('should return a status code 404 if palette id not in database', async () => {
       const existingPalette = await database('palettes').first()
       const id = existingPalette.palette_id - 1
       const updatedPalette = { palette_name: "Buffy's Colors" }
@@ -116,6 +116,28 @@ describe('/api/v1', () => {
 
       expect(response.status).toBe(404)
       expect(response.body.error).toBe(`Could not find a palette with id ${id}.`)
+    })
+  })
+
+  describe('DELETE /palettes/:id', () => {
+    it.only('should delete a palette in the database by id', async () => {
+      const existingPalette = await database('palettes').first()
+      const id = existingPalette.palette_id
+      
+      const response = await request(app).delete(`/api/v1/palettes/${id}`)
+
+      expect(response.status).toBe(200)
+      expect(response.body).toBe(`Deleted palette with id ${id}`)
+    })
+
+    it('should return a status of 422 if the palette_id cannot be found', async () => {
+      //grab existing palette
+      //make an non-existant id
+
+      //execute
+
+      //expect status to be 422
+      //expect the correct message
     })
   })
 
