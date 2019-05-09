@@ -106,6 +106,17 @@ describe('/api/v1', () => {
 
       expect(palette[0].palette_name).toEqual(updatedPalette.palette_name)
     })
+
+    it.only('should return a status code 404 if palette id not in database', async () => {
+      const existingPalette = await database('palettes').first()
+      const id = existingPalette.palette_id - 1
+      const updatedPalette = { palette_name: "Buffy's Colors" }
+
+      const response = await request(app).put(`/api/v1/palettes/${id}`).send(updatedPalette)
+
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBe(`Could not find a palette with id ${id}.`)
+    })
   })
 
 
