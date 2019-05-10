@@ -189,6 +189,19 @@ describe('/api/v1', () => {
 
       expect(project[0].project_name).toBe(updatedName.project_name)
     })
+
+    it('should return a status code 404 if project id not in database', async () => {
+
+      const existingProject = await database('projects').first()
+      const id = existingProject.project_id -10
+
+      const updatedName = { project_name: "Classroom Colors" }
+      const response = await request(app).put(`/api/v1/projects/${id}`).send(updatedName)
+
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBe(`Could not find a project with id ${id}.`)
+
+    })
   });
 
   describe('POST /projects', () => {
