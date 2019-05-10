@@ -8,7 +8,6 @@ const configuration = require('./knexfile.js')[environment]
 const database = require('knex')(configuration)
 
 describe('/api/v1', () => {
-  let server
 
   beforeEach(async () => {
     await database.seed.run()
