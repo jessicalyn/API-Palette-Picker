@@ -1,5 +1,3 @@
-## Title:
-
 #### Description:
 
 
@@ -33,3 +31,4 @@
 - [ ] I have commented my code, particularly in hard-to-understand areas
 
 #### GIF of how this PR makes you feel:
+![Fun and creative GIF]()
