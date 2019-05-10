@@ -174,6 +174,32 @@ This endpoint grabs all existing projects in the database.
 ]
 ```
 
+## GET `/projects/:id`
+This endpoint grabs an existing project in the database by id.
+
+#### Example Responses
+
+##### Status: 200 OK
+
+```
+[
+    {
+        "project_id": 6,
+        "project_name": "Louisa's Favorite Magentas",
+        "created_at": "2019-05-10T20:59:55.362Z",
+        "updated_at": "2019-05-10T20:59:55.362Z"
+    }
+]
+```
+
+##### Status: 404 Not Found
+
+```
+{
+    "error": "Could not find project with id 66"
+}
+```
+
 ## POST `/projects`
 This endpoint adds a new project. 
 
