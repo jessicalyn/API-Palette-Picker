@@ -68,7 +68,7 @@ describe('/api/v1', () => {
       }
 
       const response = await request(app).post('/api/v1/palettes').send(newPalette)
-      const palettes = await database('palettes').where('palette_id', response.body[0]).select()
+      const palettes = await database('palettes').where('palette_id', response.body.palette_id).select()
       const palette = palettes[0]
 
       expect(response.status).toBe(201)
@@ -91,7 +91,7 @@ describe('/api/v1', () => {
       const response = await request(app).post('/api/v1/palettes').send(newPalette)
 
       expect(response.status).toBe(422)
-      expect(response.body).toStrictEqual({ error: 'Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "project_id"'})
+      expect(response.body).toStrictEqual({ error: 'Expected format: palette_name: <String>, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "project_id"'})
     })
   });
 

@@ -44,12 +44,12 @@ app.post('/api/v1/palettes', (request, response) => {
 
   for(let requiredParameters of ['palette_name', 'project_id', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
     if (newPalette[requiredParameters] === undefined) {
-      return response.status(422).json({ error: `Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "${requiredParameters}"`})
+      return response.status(422).json({ error: `Expected format: palette_name: <String>, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "${requiredParameters}"`})
     }
   }
       database('palettes').insert(newPalette, 'palette_id')
-        .then(palette => {
-          return response.status(201).json(palette)
+        .then(paletteId => {
+          return response.status(201).json({ palette_id: paletteId[0] })
         })
         .catch(error => {
           return response.status(500).json({ error })
