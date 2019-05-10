@@ -6,7 +6,7 @@ const database = require('knex')(configuration)
 const app = express()
 app.use(express.json())
 app.get('/', (request, response) => {
-  response.send('Hello World')
+  response.send('Welcome to Palette Picker')
 });
 
 // Palette Endpoints
