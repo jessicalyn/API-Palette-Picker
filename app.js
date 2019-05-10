@@ -48,8 +48,8 @@ app.post('/api/v1/palettes', (request, response) => {
     }
   }
       database('palettes').insert(newPalette, 'palette_id')
-        .then(palette => {
-          return response.status(201).json(palette)
+        .then(paletteId => {
+          return response.status(201).json({ palette_id: paletteId[0] })
         })
         .catch(error => {
           return response.status(500).json({ error })
