@@ -7,7 +7,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "node --exec babel-node server.js",
-    "start:nodemon": "nodemon server.js"
+    "start:nodemon": "nodemon server.js",
+    "migrate": "knex migrate:latest --env=test",
+    "seed": "knex seed:run --env=test"
   },
   "repository": {
     "type": "git",
