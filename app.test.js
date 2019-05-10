@@ -91,7 +91,7 @@ describe('/api/v1', () => {
       const response = await request(app).post('/api/v1/palettes').send(newPalette)
 
       expect(response.status).toBe(422)
-      expect(response.body).toStrictEqual({ error: 'Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "project_id"'})
+      expect(response.body).toStrictEqual({ error: 'Expected format: palette_name: <String>, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "project_id"'})
     })
   });
 

@@ -34,8 +34,6 @@ The Palettes endpoints provide information about all the Palettes in Palette Pic
 ## POST `/palettes`
 This endpoint adds a new palette. 
 
-Required parameters: , '', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5'.
-
 ### Request Body `application/json`
 | Name | Type | Description | Required |
 | --- | --- | --- | --- |
@@ -65,7 +63,21 @@ Required parameters: , '', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5'
 
 ##### Status: 200 OK
 ```
-[
   { palette_id: 5 }
-]
+```
+
+##### Status: 422 Unprocessable Entity
+```
+{
+    "error": 
+      "Expected format:
+        palette_name: <String>,
+        project_id: <Integer>,
+        color_1: <String>,
+        color_2: <String>,
+        color_3: <String>,
+        color_4: <String>,
+        color_5: <String>.
+        You are missing a "project_id""
+}
 ```
