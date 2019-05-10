@@ -94,7 +94,7 @@ describe('/api/v1', () => {
       expect(response.status).toBe(422)
       expect(response.body).toStrictEqual({ error: 'Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "project_id"'})
     })
-  })
+  });
 
   describe('PUT /palettes/:id', () => {
     it('should update a current palette with any new values by id', async () => {
@@ -118,7 +118,7 @@ describe('/api/v1', () => {
       expect(response.status).toBe(404)
       expect(response.body.error).toBe(`Could not find a palette with id ${id}.`)
     })
-  })
+  });
 
   describe('DELETE /palettes/:id', () => {
     it('should delete a palette in the database by id', async () => {
@@ -187,9 +187,9 @@ describe('/api/v1', () => {
       const response = await request(app).put(`/api/v1/projects/${existingProject.project_id}`).send(updatedName)
       const project = await database('projects').where('project_id', existingProject.project_id)
 
-      expect(project[0].project_name).toBe(existingProject.project_name)
+      expect(project[0].project_name).toBe(updatedName.project_name)
     })
-  })
+  });
 
   describe('POST /projects', () => {
     it('should add a new project to the database', async () => {
@@ -233,17 +233,4 @@ describe('/api/v1', () => {
       expect(response.body.error).toBe(`We could not find a project with an id of ${id}`)
     })
   });
-
-  describe('PUT /projects/:id', () => {
-    it('should update an existing project by id', async () => {
-
-      const existingProject = await database('projects').first()
-      const id = existingProject.project_id
-      const updatedProject = { project_name: "Cleopatra's Colors" }
-
-      const response = await request(app).put(`/api/v1/projects/${id}`).send(updatedProject)
-      expect(response.status).toBe(200)
-      //expect project name to match
-    })
-  })
-})
+});
