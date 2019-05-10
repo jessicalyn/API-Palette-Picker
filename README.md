@@ -142,6 +142,67 @@ This endpoint adds a new palette.
 }
 ```
 
+--------------
+
+## GET `/projects`
+This endpoint grabs all existing projects in the database.
+
+#### Example Responses
+
+##### Status: 200 OK
+
+```
+[
+    {
+        "project_id": 5,
+        "project_name": "Fitness App",
+        "created_at": "2019-05-09T14:30:12.804Z",
+        "updated_at": "2019-05-09T14:30:12.804Z"
+    },
+    {
+        "project_id": 4,
+        "project_name": "Yoshi's Colors",
+        "created_at": "2019-05-09T14:30:12.800Z",
+        "updated_at": "2019-05-09T14:30:12.800Z"
+    },
+    {
+        "project_id": 6,
+        "project_name": "Louisa's Favorite Magentas",
+        "created_at": "2019-05-10T20:59:55.362Z",
+        "updated_at": "2019-05-10T20:59:55.362Z"
+    }
+]
+```
+
+## POST `/projects`
+This endpoint adds a new project. 
+
+### Request Body `application/json`
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| palette_name| string | Name of Project | yes |
+|
+
+#### Example Request Body
+```
+  {
+    "palette_name": "Bart's Colors", 
+  }
+```
+
+#### Example Responses:
+
+##### Status: 200 OK
+```
+  { palette_id: 6 }
+```
+
+##### Status: 422 Unprocessable Entity
+```
+{
+    "error": "Missing required parameter. Expected format: { project_name: <String> }."
+}
+```
 ## PUT `/palettes/:id`
 This endpoint updates an existing Palette, by id. 
 
