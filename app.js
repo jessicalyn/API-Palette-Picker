@@ -44,36 +44,34 @@ app.post('/api/v1/palettes', (request, response) => {
 
   for(let requiredParameters of ['palette_name', 'project_id', 'color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
     if (newPalette[requiredParameters] === undefined) {
-      response.status(422).json({ error: `Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "${requiredParameters}"`})
-    } else {
-      database('palettes').insert(newPalette, 'palette_id')
-        .then(palette => {
-          response.status(201).json(palette)
-        })
-        .catch(error => {
-          response.status(500).json({
-            error
-        })
-      })
+      return response.status(422).json({ error: `Expected format: { palette_name: <String>}, project_id: <Integer>, color_1: <String>, color_2: <String>, color_3: <String>, color_4: <String>, color_5: <String>. You are missing a "${requiredParameters}"`})
     }
   }
-});
+      database('palettes').insert(newPalette, 'palette_id')
+        .then(palette => {
+          return response.status(201).json(palette)
+        })
+        .catch(error => {
+          return response.status(500).json({ error })
+    })
+  });
 
-app.put('/api/palettes/:id', (request, response) => {
+app.put('/api/v1/palettes/:id', (request, response) => {
+  const existingPalette = database('palettes').where('palette_id', request.params.id).select()
   const updatedPalette = request.body
   database('palettes')
     .where('palette_id', request.params.id)
     .update({ 
-      palette_name: updatedPalette.palette_name || palette_name,
-      project_id: updatedPalette.project_id || project_id,
-      color_1: updatedPalette.color_1 || color_1,
-      color_2: updatedPalette.color_2 || color_2,
-      color_3: updatedPalette.color_3 || color_3,
-      color_4: updatedPalette.color_4 || color_4,
-      color_5: updatedPalette.color_5 || color_5,
+      palette_name: updatedPalette.palette_name || existingPalette.palette_name,
+      project_id: updatedPalette.project_id || existingPalette.project_id,
+      color_1: updatedPalette.color_1 || existingPalette.color_1,
+      color_2: updatedPalette.color_2 || existingPalette.color_2,
+      color_3: updatedPalette.color_3 || existingPalette.color_3,
+      color_4: updatedPalette.color_4 || existingPalette.color_4,
+      color_5: updatedPalette.color_5 || existingPalette.color_5,
     }) 
       .then(palette => {
-        if (palette.length) {
+        if (palette) {
           response.status(200).json({
             message: 'Palette successfully updated.'
           })
@@ -135,7 +133,7 @@ app.post('/api/v1/projects', (request, response) => {
 
   for (let requiredParameter of ['project_name']) {
     if (!project[requiredParameter]) {
-      return response.status(422).send({
+      return response.status(422).json({
         error: `Missing required parameter. Expected format: { project_name: <String> }.`
       })
     }
@@ -175,11 +173,11 @@ app.put('/api/v1/projects/:id', (request, response) => {
     })
   } else {
     database('projects').where('project_id', request.params.id).select()
-      .update({ project_name: 'update.project_name', updated_at: "does this work" }, [project_name, updated_at])
+      .update({ project_name: update.project_name }, ['project_name'])
       .then(project => {
-        if (project) {
+        if (project.length) {
           response.status(200).json({
-            message: `Project name successfully updated to ${project_name} at ${updated_at}.`})
+            message: `Project name successfully updated to ${project_name}.`})
         } else {
           response.status(404).json({
             error: `Could not find a project with id ${request.params.id}.`
