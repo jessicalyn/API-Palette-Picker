@@ -44,7 +44,7 @@ describe('/api/v1', () => {
 
     it('should return status code 404 and error message if id does not exist', async () => {
       const expectedPalette = await database('palettes').first()
-      const id = expectedPalette.palette_id - 1 
+      const id = expectedPalette.palette_id - 10 
 
       const response = await request(app).get(`/api/v1/palettes/${id}`)
       
@@ -110,7 +110,7 @@ describe('/api/v1', () => {
 
     it('should return a status code 404 if palette id not in database', async () => {
       const existingPalette = await database('palettes').first()
-      const id = existingPalette.palette_id - 1
+      const id = existingPalette.palette_id - 10
       const updatedPalette = { palette_name: "Buffy's Colors" }
 
       const response = await request(app).put(`/api/v1/palettes/${id}`).send(updatedPalette)
@@ -133,7 +133,7 @@ describe('/api/v1', () => {
 
     it('should return a status of 422 if the palette_id cannot be found', async () => {
       const existingPalette = await database('palettes').first()
-      const id = existingPalette.palette_id - 1
+      const id = existingPalette.palette_id - 10
 
       const response = await request(app).delete(`/api/v1/palettes/${id}`)
 
@@ -170,7 +170,7 @@ describe('/api/v1', () => {
 
     it('should return status code 404 and error message if id does not exist', async () => {
       const expectedProject = await database('projects').first()
-      const id = expectedProject.project_id - 1
+      const id = expectedProject.project_id - 10
 
       const response = await request(app).get(`/api/v1/projects/${id}`)
 
@@ -180,7 +180,7 @@ describe('/api/v1', () => {
   });
   
   describe('PUT /projects/:id', () => {
-    it.skip('should update a project name in the database by id', async () => {
+    it('should update a project name in the database by id', async () => {
       const existingProject = await database('projects').first()
       const updatedName = { project_name: "Classroom Colors" }
 
@@ -225,7 +225,7 @@ describe('/api/v1', () => {
 
     it('should return a status code 404 when no project with matching id', async () => {
       const existingProject = await database('projects').first()
-      const id = existingProject.project_id - 1
+      const id = existingProject.project_id - 10
 
       const response = await request(app).delete(`/api/v1/projects/${id}`)
 
@@ -235,7 +235,7 @@ describe('/api/v1', () => {
   });
 
   describe('PUT /projects/:id', () => {
-    it.skip('should update an existing project by id', async () => {
+    it('should update an existing project by id', async () => {
 
       const existingProject = await database('projects').first()
       const id = existingProject.project_id
