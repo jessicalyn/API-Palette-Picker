@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "start": "node server.js",
+    "start": "node --exec babel-node server.js",
     "start:nodemon": "nodemon server.js"
   },
   "repository": {
