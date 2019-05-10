@@ -68,7 +68,7 @@ describe('/api/v1', () => {
       }
 
       const response = await request(app).post('/api/v1/palettes').send(newPalette)
-      const palettes = await database('palettes').where('palette_id', response.body[0]).select()
+      const palettes = await database('palettes').where('palette_id', response.body.palette_id).select()
       const palette = palettes[0]
 
       expect(response.status).toBe(201)
