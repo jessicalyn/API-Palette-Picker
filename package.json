@@ -23,12 +23,13 @@
   },
   "homepage": "https://github.com/jessicalyn/API-Palette-Picker#readme",
   "dependencies": {
+    "@babel/preset-env": "^7.4.4",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
+    "jest": "^24.5.0",
     "knex": "^0.16.5",
     "nodemon": "^1.19.0",
-    "pg": "^7.10.0",
-    "@babel/preset-env": "^7.4.4",
-    "jest": "^24.5.0"
+    "pg": "^7.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
