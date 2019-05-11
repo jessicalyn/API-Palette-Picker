@@ -4,7 +4,11 @@ const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
 const app = express()
+const cors = require('cors')
+
 app.use(express.json())
+app.use(cors())
+
 app.get('/', (request, response) => {
   response.send('Welcome to our Palette Picker')
 });
