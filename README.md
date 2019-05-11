@@ -142,7 +142,146 @@ This endpoint adds a new palette.
 }
 ```
 
-## PUT `/palettes/:id`
+--------------
+
+## GET `/projects`
+This endpoint grabs all existing projects in the database.
+
+#### Example Responses
+
+##### Status: 200 OK
+
+```
+[
+    {
+        "project_id": 5,
+        "project_name": "Fitness App",
+        "created_at": "2019-05-09T14:30:12.804Z",
+        "updated_at": "2019-05-09T14:30:12.804Z"
+    },
+    {
+        "project_id": 4,
+        "project_name": "Yoshi's Colors",
+        "created_at": "2019-05-09T14:30:12.800Z",
+        "updated_at": "2019-05-09T14:30:12.800Z"
+    },
+    {
+        "project_id": 6,
+        "project_name": "Louisa's Favorite Magentas",
+        "created_at": "2019-05-10T20:59:55.362Z",
+        "updated_at": "2019-05-10T20:59:55.362Z"
+    }
+]
+```
+
+## GET `/projects/:id`
+This endpoint grabs an existing project in the database by id.
+
+#### Example Responses
+
+##### Status: 200 OK
+
+```
+[
+    {
+        "project_id": 6,
+        "project_name": "Louisa's Favorite Magentas",
+        "created_at": "2019-05-10T20:59:55.362Z",
+        "updated_at": "2019-05-10T20:59:55.362Z"
+    }
+]
+```
+
+##### Status: 404 Not Found
+
+```
+{ "error": "Could not find project with id 66" }
+```
+
+## POST `/projects`
+This endpoint adds a new project. 
+
+### Request Body `application/json`
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| palette_name| string | Name of Project | yes |
+|
+
+#### Example Request Body
+```
+  { "palette_name": "Bart's Colors" }
+```
+
+#### Example Responses:
+
+##### Status: 200 OK
+```
+  { palette_id: 6 }
+```
+
+##### Status: 422 Unprocessable Entity
+```
+{
+    "error": "Missing required parameter. Expected format: { project_name: <String> }."
+}
+```
+
+## PUT `/projects`
+This endpoint updates an existing. 
+
+### Request Body `application/json`
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| project_id| integer | ID of Project | yes |
+| palette_name| string | Name of Project | yes |
+|
+
+#### Example Request Body
+```
+  { "project_id": 6, "project_name": "Buffy's Palette" }
+```
+
+#### Example Responses:
+
+##### Status: 200 OK
+```
+  { palette_id: 6 }
+```
+
+##### Status: 422 Unprocessable Entity
+
+```
+{
+    "error": "Missing required parameter. Expected format: { project_name: <String> }"
+}
+```
+##### Status: 404 Not Found
+
+```
+{ "error": "Could not find a project with id 88." }
+```
+
+## DELETE `/projects/:id`
+This endpoint deletes an existing from the database. 
+
+### Request Body `application/json`
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| project_id| integer | ID of Project | yes |
+| palette_name| string | Name of Project | yes |
+|
+
+##### Status: 204 No Content
+
+```
+Nothing returned, successfully deleted
+```
+
+##### Status: 404 Not Found
+
+```
+{ "error": "We could not find a project with an id of 88" }
+```## PUT `/palettes/:id`
 This endpoint updates an existing Palette, by id. 
 
 ### Request Body `application/json`
