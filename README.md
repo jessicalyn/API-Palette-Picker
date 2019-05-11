@@ -30,119 +30,6 @@ The Palettes endpoints provide information about all the Palettes in Palette Pic
 - `/palettes/:id` -- `DELETE` an existing Palette
 
 ---
-## GET `/palettes`
-This endpoint retrieves data for all Palettes. 
-
-#### Example Responses:
-
-##### Status: 200 OK
-```
-  [
-    {
-        "palette_id": 1,
-        "palette_name": "Earth Tones",
-        "project_id": 1,
-        "color_1": "#F1C231",
-        "color_2": "#E69138",
-        "color_3": "#44818E",
-        "color_4": "#B46005",
-        "color_5": "#F9CB9C",
-        "created_at": "2019-05-09T19:19:55.831Z",
-        "updated_at": "2019-05-09T19:19:55.831Z"
-    },
-    {
-        "palette_id": 2,
-        "palette_name": "Jungle Palette",
-        "project_id": 1,
-        "color_1": "#37761B",
-        "color_2": "#990000",
-        "color_3": "#44818E",
-        "color_4": "#6BA84F",
-        "color_5": "#0C343D",
-        "created_at": "2019-05-09T19:19:55.836Z",
-        "updated_at": "2019-05-09T19:19:55.836Z"
-    }
-  ]
-```
-
-## GET `/palettes/:id`
-This endpoint retrieves data for a specific Palette, by id. 
-
-#### Example Request:
-`/palettes/1`
-
-#### Example Responses:
-
-##### Status: 200 OK
-```
-  [
-    {
-        "palette_id": 1,
-        "palette_name": "Earth Tones",
-        "project_id": 1,
-        "color_1": "#F1C231",
-        "color_2": "#E69138",
-        "color_3": "#44818E",
-        "color_4": "#B46005",
-        "color_5": "#F9CB9C",
-        "created_at": "2019-05-09T19:19:55.831Z",
-        "updated_at": "2019-05-09T19:19:55.831Z"
-    }
-  ]
-```
-
-## POST `/palettes`
-This endpoint adds a new palette. 
-
-### Request Body `application/json`
-| Name | Type | Description | Required |
-| --- | --- | --- | --- |
-| palette_name | string | Name of Palette | yes |
-| project_id | integer | ID of Project | yes |
-| color_1 | string | HEX code for specific color | yes |
-| color_2 | string | HEX code for specific color | yes |
-| color_3 | string | HEX code for specific color | yes |
-| color_4 | string | HEX code for specific color | yes |
-| color_5 | string | HEX code for specific color | yes |
-|
-
-#### Example Request Body
-```
-  {
-    "palette_name": "Archie's Colors", 
-    "project_id": 3, 
-    "color_1": "#FFAB40",
-    "color_2": "#4ECFE1",
-    "color_3": "#EEFF41", 
-    "color_4": "#F1C231",
-    "color_5": "#CE5178"
-  }
-```
-
-#### Example Responses:
-
-##### Status: 200 OK
-```
-  { palette_id: 5 }
-```
-
-##### Status: 422 Unprocessable Entity
-```
-{
-    "error": 
-      "Expected format:
-        palette_name: <String>,
-        project_id: <Integer>,
-        color_1: <String>,
-        color_2: <String>,
-        color_3: <String>,
-        color_4: <String>,
-        color_5: <String>.
-        You are missing a "project_id""
-}
-```
-
---------------
 
 ## GET `/projects`
 This endpoint grabs all existing projects in the database.
@@ -281,7 +168,123 @@ Nothing returned, successfully deleted
 
 ```
 { "error": "We could not find a project with an id of 88" }
-```## PUT `/palettes/:id`
+```
+
+---
+
+## GET `/palettes`
+This endpoint retrieves data for all Palettes. 
+
+#### Example Responses:
+
+##### Status: 200 OK
+```
+  [
+    {
+        "palette_id": 1,
+        "palette_name": "Earth Tones",
+        "project_id": 1,
+        "color_1": "#F1C231",
+        "color_2": "#E69138",
+        "color_3": "#44818E",
+        "color_4": "#B46005",
+        "color_5": "#F9CB9C",
+        "created_at": "2019-05-09T19:19:55.831Z",
+        "updated_at": "2019-05-09T19:19:55.831Z"
+    },
+    {
+        "palette_id": 2,
+        "palette_name": "Jungle Palette",
+        "project_id": 1,
+        "color_1": "#37761B",
+        "color_2": "#990000",
+        "color_3": "#44818E",
+        "color_4": "#6BA84F",
+        "color_5": "#0C343D",
+        "created_at": "2019-05-09T19:19:55.836Z",
+        "updated_at": "2019-05-09T19:19:55.836Z"
+    }
+  ]
+```
+
+## GET `/palettes/:id`
+This endpoint retrieves data for a specific Palette, by id. 
+
+#### Example Request:
+`/palettes/1`
+
+#### Example Responses:
+
+##### Status: 200 OK
+```
+  [
+    {
+        "palette_id": 1,
+        "palette_name": "Earth Tones",
+        "project_id": 1,
+        "color_1": "#F1C231",
+        "color_2": "#E69138",
+        "color_3": "#44818E",
+        "color_4": "#B46005",
+        "color_5": "#F9CB9C",
+        "created_at": "2019-05-09T19:19:55.831Z",
+        "updated_at": "2019-05-09T19:19:55.831Z"
+    }
+  ]
+```
+
+## POST `/palettes`
+This endpoint adds a new palette. 
+
+### Request Body `application/json`
+| Name | Type | Description | Required |
+| --- | --- | --- | --- |
+| palette_name | string | Name of Palette | yes |
+| project_id | integer | ID of Project | yes |
+| color_1 | string | HEX code for specific color | yes |
+| color_2 | string | HEX code for specific color | yes |
+| color_3 | string | HEX code for specific color | yes |
+| color_4 | string | HEX code for specific color | yes |
+| color_5 | string | HEX code for specific color | yes |
+|
+
+#### Example Request Body
+```
+  {
+    "palette_name": "Archie's Colors", 
+    "project_id": 3, 
+    "color_1": "#FFAB40",
+    "color_2": "#4ECFE1",
+    "color_3": "#EEFF41", 
+    "color_4": "#F1C231",
+    "color_5": "#CE5178"
+  }
+```
+
+#### Example Responses:
+
+##### Status: 200 OK
+```
+  { palette_id: 5 }
+```
+
+##### Status: 422 Unprocessable Entity
+```
+{
+    "error": 
+      "Expected format:
+        palette_name: <String>,
+        project_id: <Integer>,
+        color_1: <String>,
+        color_2: <String>,
+        color_3: <String>,
+        color_4: <String>,
+        color_5: <String>.
+        You are missing a "project_id""
+}
+```
+
+## PUT `/palettes/:id`
 This endpoint updates an existing Palette, by id. 
 
 ### Request Body `application/json`
