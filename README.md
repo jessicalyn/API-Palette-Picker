@@ -1,6 +1,4 @@
 # API-Palette-Picker
-Description of project...
-This app is deployed to Heroku:
 
 ## API Documentation:
 
@@ -91,19 +89,19 @@ This endpoint adds a new project.
 ### Request Body `application/json`
 | Name | Type | Description | Required |
 | --- | --- | --- | --- |
-| palette_name| string | Name of Project | yes |
-|
+| project_name| string | Name of Project | yes |
+
 
 #### Example Request Body
 ```
-  { "palette_name": "Bart's Colors" }
+  { "project_name": "Bart's Colors" }
 ```
 
 #### Example Responses:
 
 ##### Status: 200 OK
 ```
-  { palette_id: 6 }
+  { project_id: 6 }
 ```
 
 ##### Status: 422 Unprocessable Entity
@@ -121,7 +119,7 @@ This endpoint updates an existing.
 | --- | --- | --- | --- |
 | project_id| integer | ID of Project | yes |
 | palette_name| string | Name of Project | yes |
-|
+
 
 #### Example Request Body
 ```
@@ -132,7 +130,7 @@ This endpoint updates an existing.
 
 ##### Status: 200 OK
 ```
-  { palette_id: 6 }
+  { project_id: 6 }
 ```
 
 ##### Status: 422 Unprocessable Entity
@@ -149,14 +147,14 @@ This endpoint updates an existing.
 ```
 
 ## DELETE `/projects/:id`
-This endpoint deletes an existing from the database. 
+This endpoint deletes an existing project and all associated palettes from the database. 
 
 ### Request Body `application/json`
 | Name | Type | Description | Required |
 | --- | --- | --- | --- |
 | project_id| integer | ID of Project | yes |
-| palette_name| string | Name of Project | yes |
-|
+| project_name| string | Name of Project | yes |
+
 
 ##### Status: 204 No Content
 
@@ -246,7 +244,7 @@ This endpoint adds a new palette.
 | color_3 | string | HEX code for specific color | yes |
 | color_4 | string | HEX code for specific color | yes |
 | color_5 | string | HEX code for specific color | yes |
-|
+
 
 #### Example Request Body
 ```
@@ -297,7 +295,7 @@ This endpoint updates an existing Palette, by id.
 | color_3 | string | HEX code for specific color | no |
 | color_4 | string | HEX code for specific color | no |
 | color_5 | string | HEX code for specific color | no |
-|
+
 
 #### Example Request Body
 ```
