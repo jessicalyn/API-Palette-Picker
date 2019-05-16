@@ -26,6 +26,7 @@ The Palettes endpoints provide information about all the Palettes in Palette Pic
 - `/palettes` -- `POST` add a new Palette
 - `/palettes/:id` -- `PUT` edit an existing Palette
 - `/palettes/:id` -- `DELETE` an existing Palette
+- `/search?palette_name=` -- `GET` a specific Palette by name
 
 ---
 
@@ -335,4 +336,35 @@ This endpoint deletes an existing Palette, by id.
 ##### Status: 422 Unprocessable Entity
 ```
   { "error": "Could not find palette with id 1234." }
+```
+
+## GET `/search?palette_name=`
+This endpoint retrieves data for a specific Palette, by name. 
+
+#### Example Request:
+`/search?palette_name=Favorite%20Colors`
+
+#### Example Responses:
+
+##### Status: 200 OK
+```
+  [
+    {
+        "palette_id": 15,
+        "palette_name": "Favorite Colors",
+        "project_id": 5,
+        "color_1": "#F1C231",
+        "color_2": "#E69138",
+        "color_3": "#44818E",
+        "color_4": "#B46005",
+        "color_5": "#F9CB9C",
+        "created_at": "2019-05-09T19:19:55.831Z",
+        "updated_at": "2019-05-09T19:19:55.831Z"
+    }
+  ]
+```
+
+##### Status: 422 Unprocessable Entity
+```
+  { "error": "Could not find palette with name Favorite Colors." }
 ```
