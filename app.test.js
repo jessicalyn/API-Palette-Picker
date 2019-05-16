@@ -141,6 +141,25 @@ describe('/api/v1', () => {
     })
   });
 
+  describe('GET /search', () => {
+    it('should return a palette from the database by name', async () => {
+      const expectedPalette = await database('palettes').first()
+      const name = expectedPalette.palette_name
+      
+      const response = await request(app).get(`/api/v1/search?palette_name=${name}`)
+      const result = response.body[0]
+
+      expect(response.status).toBe(200)
+      expect(result.palette_id).toEqual(expectedPalette.palette_id)
+    })
+
+    it('should return status code 404 and error message if id does not exist', async () => {
+      const response = await request(app).get('/api/v1/search?palette_name=WRONGNAME')
+      
+      expect(response.status).toBe(404)
+      expect(response.body.error).toBe('Could not find palette with name WRONGNAME')
+    })
+  });
 
 // Project Endpoints Tests
   describe('GET /projects', () => {
