@@ -2,7 +2,9 @@
 
 ## API Documentation:
 
-Welcome to the Palette Picker API! This documentation should familiarize you with the resources available and how to consume them with HTTP requests. The documentation 
+Welcome to the Palette Picker API! This documentation should familiarize you with the resources available and how to consume them with HTTP requests.
+
+A front-end application for Palette Picker is deployed to Heroku: https://pick-your-palette.herokuapp.com/
 
 ### Root URL
 The Root URL for Palette Picker is `https://palette-picker-mfjk.herokuapp.com/api/v1` The documentation below requires prepending the Root URL to the endpoints in order to fulfill the requests.
