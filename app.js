@@ -107,14 +107,13 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
 });
 
 app.get('/api/v1/search', (request, response) => {
-  const name = request.param('palette_name')
-  console.log(name)
+  const name = request.query.palette_name
   database('palettes').where('palette_name', name).select()
     .then(palettes => {
       if (palettes.length) {
         response.status(200).json(palettes)
       } else {
-        response.status(422).json({
+        response.status(404).json({
           error: `Could not find palette with name ${name}`
         })
       }
